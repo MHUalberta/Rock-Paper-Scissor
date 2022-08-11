@@ -22,7 +22,7 @@ function playerSelection() {
         
         selection = prompt("Please choose: rock, paper, or scissor?");
         if (selection === null)
-            return;
+            return null;
         else
             selection = selection.toLowerCase();
     }
@@ -45,3 +45,61 @@ function checkWin(playerSelection, computerChoice) {
     
     else return 0;                                  //If something goes horribly wrong.
 }
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function showFeedback(playerSelection, computerChoice, score) {
+    playerSelection = capitalizeFirstLetter(playerSelection);
+    computerChoice = capitalizeFirstLetter(computerChoice); 
+    
+    if (score === 1)
+        alert(`You Win! ${playerSelection} beats ${computerChoice}`);
+    else if (score === -1)
+        alert(`You Lose! ${playerSelection} loses to ${computerChoice}`);
+    else
+        alert(`Draw! You both picked ${playerSelection}`);
+    
+    return;
+}
+
+function playRound() {
+    let selection = playerSelection();
+    if (selection === null) {
+        alert("U suck y did u quit");
+        return;
+    }
+    let computerChoice = getComputerChoice(); 
+    let score = checkWin(selection, computerChoice);
+    showFeedback(selection, computerChoice, score);
+    return score;
+}
+
+function game() {
+    alert("You are now playing Rock Paper Scissor with a very intelligent and totally sentient AI. No losers here, first to reach 5 points wins!")
+    let yourScore = 0;
+    let computerScore = 0;
+    let score;
+    for (i=0; i<5; i++) {
+        score = playRound();
+        if (score === 1)
+            yourScore += 1;
+        else if (score === -1)
+            computerScore += 1;
+        else if (score === 0)
+            i--;
+        else    //If user quits
+            return;
+        alert(`You: ${yourScore}\nComputer: ${computerScore}`);
+    }
+
+    if (yourScore > computerScore)
+        alert("CONGRATS, you won!")
+    else
+        alert("YOU LOST, you suck!")
+    
+    return;
+}
+
+game();
