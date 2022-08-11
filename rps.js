@@ -55,11 +55,11 @@ function showFeedback(playerSelection, computerChoice, score) {
     computerChoice = capitalizeFirstLetter(computerChoice); 
     
     if (score === 1)
-        alert(`You Win! ${playerSelection} beats ${computerChoice}`);
+        console.log(`\nYou Win! ${playerSelection} beats ${computerChoice}`);
     else if (score === -1)
-        alert(`You Lose! ${playerSelection} loses to ${computerChoice}`);
+        console.log(`\nYou Lose! ${playerSelection} loses to ${computerChoice}`);
     else
-        alert(`Draw! You both picked ${playerSelection}`);
+        console.log(`\nDraw! You both picked ${playerSelection}\n`);
     
     return;
 }
@@ -67,7 +67,7 @@ function showFeedback(playerSelection, computerChoice, score) {
 function playRound() {
     let selection = playerSelection();
     if (selection === null) {
-        alert("U suck y did u quit");
+        console.log("\nU suck y did u quit");
         return;
     }
     let computerChoice = getComputerChoice(); 
@@ -77,7 +77,7 @@ function playRound() {
 }
 
 function game() {
-    alert("You are now playing Rock Paper Scissor with a very intelligent and totally sentient AI. No losers here, first to reach 5 points wins!")
+    console.log("You are now playing Rock Paper Scissor with a very intelligent and totally sentient AI. There is 5 rounds, try your best to win!\n")
     let yourScore = 0;
     let computerScore = 0;
     let score;
@@ -88,16 +88,18 @@ function game() {
         else if (score === -1)
             computerScore += 1;
         else if (score === 0)
-            i--;
+            1;
         else    //If user quits
             return;
-        alert(`You: ${yourScore}\nComputer: ${computerScore}`);
+        console.log(`You: ${yourScore}\nComputer: ${computerScore}\n`);
     }
 
     if (yourScore > computerScore)
-        alert("CONGRATS, you won!")
+        console.log("\nCONGRATS, you won!")
+    else if (yourScore < computerScore)
+        console.log("\nYOU LOST, you suck!")
     else
-        alert("YOU LOST, you suck!")
+        console.log("\nDRAW, you don't fully suck!")
     
     return;
 }
