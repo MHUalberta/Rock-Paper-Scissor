@@ -11,3 +11,15 @@ function getComputerChoice() {
 
     return computerChoice;
 }
+
+function playerSelection() {
+    let selection = prompt("Please choose: Rock, Paper, or Scissor?");
+    while (selection !== "Rock" && selection !== "Paper" && selection !== "Scissor") {
+        if (selection === null) {
+            return;
+        }
+        alert("Invalid choice!");
+        selection = prompt("Please choose: Rock, Paper, or Scissor?");
+    }
+    return selection;
+}
