@@ -1,3 +1,8 @@
+function changeHoverState() {
+    const image = this.firstChild;
+    image.classList.toggle("img-hover");
+}
+
 function getComputerChoice() {
     let randomNum = Math.random();
     randomNum = Math.floor(randomNum*3); //random integer between 0 and 2
@@ -41,9 +46,9 @@ function showFeedback(playerSelection, computerChoice, score) {
 
     result = document.createElement("p");
     if (score === 1)
-        result.textContent += `You Win! ${playerSelection} beats ${computerChoice}`;
+        result.textContent += `You win this round! ${playerSelection} beats ${computerChoice}`;
     else if (score === -1)
-        result.textContent += `You Lose! ${playerSelection} loses to ${computerChoice}`;
+        result.textContent += `You lose this round! ${playerSelection} loses to ${computerChoice}`;
     else
         result.textContent += `Draw! You both picked ${playerSelection}`;
     div.appendChild(result);
@@ -91,5 +96,8 @@ function playRound() {
 
 
 let matchInfo = [0, 0, 0];  //[player score, ai score, round];
+
 const buttons = document.querySelectorAll("button");
 buttons.forEach(button => {button.addEventListener("click", playRound);});
+buttons.forEach(button => {button.addEventListener("mouseover", changeHoverState);});
+buttons.forEach(button => {button.addEventListener("mouseout", changeHoverState);});
