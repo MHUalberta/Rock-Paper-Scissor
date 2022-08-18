@@ -11,24 +11,6 @@ function getComputerChoice() {
     return computerChoice;
 }
 
-function playerSelection() {
-    let selection;
-    let flag = true;
-    while (flag || (selection !== "rock" && selection !== "paper" && selection !== "scissor")) {
-        if (flag) 
-            flag = false;
-        else 
-            alert("Invalid Input"); //If the user reaches this point in the code again, then they provided invalid input.
-        
-        selection = prompt("Please choose: rock, paper, or scissor?");
-        if (selection === null)
-            return null;
-        else
-            selection = selection.toLowerCase();
-    }
-    return selection;
-}
-
 function checkWin(playerSelection, computerChoice) {
     //Returns 1 for win, 0 for draw, -1 for loss.
     if (playerSelection === computerChoice) 
@@ -52,56 +34,62 @@ function capitalizeFirstLetter(string) {
 
 function showFeedback(playerSelection, computerChoice, score) {
     playerSelection = capitalizeFirstLetter(playerSelection);
-    computerChoice = capitalizeFirstLetter(computerChoice); 
+    computerChoice = capitalizeFirstLetter(computerChoice);
     
+    div = document.querySelector(".results");
+    div.innerHTML = '';
+
+    result = document.createElement("p");
     if (score === 1)
-        console.log(`\nYou Win! ${playerSelection} beats ${computerChoice}`);
+        result.textContent += `You Win! ${playerSelection} beats ${computerChoice}`;
     else if (score === -1)
-        console.log(`\nYou Lose! ${playerSelection} loses to ${computerChoice}`);
+        result.textContent += `You Lose! ${playerSelection} loses to ${computerChoice}`;
     else
-        console.log(`\nDraw! You both picked ${playerSelection}\n`);
+        result.textContent += `Draw! You both picked ${playerSelection}`;
+    div.appendChild(result);
+
+    matchInfoPara = document.createElement("p");
+    matchInfoPara.textContent = `The current score is ${matchInfo[0]}-${matchInfo[1]}`;
+    div.appendChild(matchInfoPara);
     
     return;
+}
+
+function updateMatchInfo(score) {
+    if (score === 1) matchInfo[0]++;    //win
+    if (score === -1) matchInfo[1]++;   //lose
+    if (score !== 0) matchInfo[2]++;                     //Increment round
+    return matchInfo;
+}
+
+function showWinner() {
+    const winP = document.createElement("p");
+    if (matchInfo[0] > matchInfo[1])
+        winP.textContent = "Match is over, you won!";
+    else if (matchInfo[0] < matchInfo[1])
+        winP.textContent = "Match is over, you lost!";
+    else
+        winP.textContent = "Match is over, Draw!"
+    
+    const div = document.querySelector(".results");
+    div.appendChild(winP);
 }
 
 function playRound() {
-    let selection = playerSelection();
-    if (selection === null) {
-        console.log("\nU suck y did u quit");
-        return;
-    }
-    let computerChoice = getComputerChoice(); 
-    let score = checkWin(selection, computerChoice);
-    showFeedback(selection, computerChoice, score);
-    return score;
-}
+    if (matchInfo[2] >= 5) return;
 
-function game() {
-    console.log("You are now playing Rock Paper Scissor with a very intelligent and totally sentient AI. There is 5 rounds, try your best to win!\n")
-    let yourScore = 0;
-    let computerScore = 0;
-    let score;
-    for (i=0; i<5; i++) {
-        score = playRound();
-        if (score === 1)
-            yourScore += 1;
-        else if (score === -1)
-            computerScore += 1;
-        else if (score === 0)
-            1;
-        else    //If user quits
-            return;
-        console.log(`You: ${yourScore}\nComputer: ${computerScore}\n`);
-    }
-
-    if (yourScore > computerScore)
-        console.log("\nCONGRATS, you won!")
-    else if (yourScore < computerScore)
-        console.log("\nYOU LOST, you suck!")
-    else
-        console.log("\nDRAW, you don't fully suck!")
+    const playerSelection = this.classList.value;
+    const computerChoice = getComputerChoice(); 
+    const score = checkWin(playerSelection, computerChoice);
     
-    return;
+    updateMatchInfo(score);
+    showFeedback(playerSelection, computerChoice, score);
+    if (matchInfo[2] >= 5) {
+        showWinner();
+    }
 }
 
-game();
+
+let matchInfo = [0, 0, 0];  //[player score, ai score, round];
+const buttons = document.querySelectorAll("button");
+buttons.forEach(button => {button.addEventListener("click", playRound);});
