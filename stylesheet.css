@@ -16,6 +16,27 @@ body {
     display: grid;
     grid-template-rows: 1fr 2fr 1fr;
     padding: 2vh;
+    transition: background-color 1s ease;
+}
+
+@keyframes win-bg {
+    0% { background-color: #efefef; }
+    30% { background-color: rgba(76, 175, 80, 0.2); }
+    100% { background-color: #efefef; }
+}
+
+@keyframes lose-bg {
+    0% { background-color: #efefef; }
+    30% { background-color: rgba(255, 0, 0, 0.2); }
+    100% { background-color: #efefef; }
+}
+
+.win-bg {
+    animation: win-bg 1.25s ease;
+}
+
+.lose-bg {
+    animation: lose-bg 1.25s ease;
 }
 
 /* Volume Section */

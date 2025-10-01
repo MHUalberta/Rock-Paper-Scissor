@@ -48,10 +48,16 @@ function showFeedback(playerSelection, computerChoice, score) {
     if (score === 1) {
         result.textContent = `You win this round! ${playerSelection} beats ${computerChoice}`;
         result.classList.add('win-text');
+        document.body.classList.remove('lose-bg');
+        document.body.classList.add('win-bg');
+        setTimeout(() => document.body.classList.remove('win-bg'), 1250);
     }
     else if (score === -1) {
         result.textContent = `You lose this round! ${playerSelection} loses to ${computerChoice}`;
         result.classList.add('lose-text');
+        document.body.classList.remove('win-bg');
+        document.body.classList.add('lose-bg');
+        setTimeout(() => document.body.classList.remove('lose-bg'), 1250);
     }
     else {
         result.textContent = `Draw! You both picked ${playerSelection}`;
