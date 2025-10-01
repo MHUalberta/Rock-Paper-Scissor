@@ -41,21 +41,34 @@ function showFeedback(playerSelection, computerChoice, score) {
     playerSelection = capitalizeFirstLetter(playerSelection);
     computerChoice = capitalizeFirstLetter(computerChoice);
     
-    div = document.querySelector(".results");
+    const div = document.querySelector(".results");
     div.innerHTML = '';
 
-    result = document.createElement("p");
-    if (score === 1)
+    const result = document.createElement("p");
+    if (score === 1) {
         result.textContent += `You win this round! ${playerSelection} beats ${computerChoice}`;
-    else if (score === -1)
+        document.body.classList.add('win-animation');
+        result.classList.add('highlight');
+    }
+    else if (score === -1) {
         result.textContent += `You lose this round! ${playerSelection} loses to ${computerChoice}`;
-    else
+        document.body.classList.add('lose-animation');
+        result.classList.add('highlight');
+    }
+    else {
         result.textContent += `Draw! You both picked ${playerSelection}`;
+    }
     div.appendChild(result);
 
-    matchInfoPara = document.createElement("p");
-    matchInfoPara.textContent = `The current score is ${matchInfo[0]}-${matchInfo[1]}`;
+    const matchInfoPara = document.createElement("p");
+    matchInfoPara.textContent = `Score - You: ${matchInfo[0]} | AI: ${matchInfo[1]} | Total Rounds: ${matchInfo[2]}`;
     div.appendChild(matchInfoPara);
+
+    // Remove animation classes after they complete
+    setTimeout(() => {
+        document.body.classList.remove('win-animation', 'lose-animation');
+        result.classList.remove('highlight');
+    }, 500);
     
     return;
 }
@@ -81,21 +94,61 @@ function showWinner() {
 }
 
 function playRound() {
-    if (matchInfo[2] >= 5) return;
-
     const playerSelection = this.classList.value;
     const computerChoice = getComputerChoice(); 
     const score = checkWin(playerSelection, computerChoice);
     
     updateMatchInfo(score);
     showFeedback(playerSelection, computerChoice, score);
-    if (matchInfo[2] >= 5) {
-        showWinner();
-    }
 }
 
 
 let matchInfo = [0, 0, 0];  //[player score, ai score, round];
+let currentVolume = 50; // Start at 50%
+
+// Initialize audio
+const backgroundMusic = document.getElementById('background-music');
+const volumeFill = document.querySelector('.volume-fill');
+const volumeText = document.querySelector('.volume-text');
+
+// Set initial volume
+backgroundMusic.volume = currentVolume / 100;
+
+// Function to update volume
+function updateVolume(change) {
+    currentVolume = Math.max(0, Math.min(100, currentVolume + change));
+    backgroundMusic.volume = currentVolume / 100;
+    volumeFill.style.width = `${currentVolume}%`;
+    volumeText.textContent = `Volume: ${currentVolume}%`;
+    
+    // Add bounce animation to volume container
+    const volumeContainer = document.querySelector('.volume-container');
+    volumeContainer.classList.add('volume-bounce');
+    setTimeout(() => {
+        volumeContainer.classList.remove('volume-bounce');
+    }, 500);
+}
+
+// Start playing music on first interaction
+document.body.addEventListener('click', () => {
+    if (backgroundMusic.paused) {
+        backgroundMusic.play();
+    }
+}, { once: true });
+
+// Modify updateMatchInfo to handle volume changes
+function updateMatchInfo(score) {
+    if (score === 1) {
+        matchInfo[0]++;    //win
+        updateVolume(10);  // Increase volume by 10%
+    }
+    if (score === -1) {
+        matchInfo[1]++;   //lose
+        updateVolume(-10); // Decrease volume by 10%
+    }
+    if (score !== 0) matchInfo[2]++;    //Increment round
+    return matchInfo;
+}
 
 const buttons = document.querySelectorAll("button");
 buttons.forEach(button => {button.addEventListener("click", playRound);});

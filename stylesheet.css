@@ -1,40 +1,153 @@
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Roboto:wght@100&display=swap');
 
-button {
-    border: white;
-    cursor: pointer;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-img {
-    max-height: 100%;
-    max-width: 100%;
-    transition: all .07s ease;
-}
-
-.img-hover {
-    transform: scale(1.4);
-}
-
-div.buttons {
-    display: flex;
-    justify-content: center;
-}
-
-div.results {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 90vh;
+html, body {
+    height: 100vh;
+    overflow: hidden;
     background-color: #efefef;
 }
 
-p {
-    font-size: 2vw;
+body {
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+    padding: 2vh;
+}
+
+/* Volume Section */
+.volume-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2vh;
+}
+
+.volume-bar {
+    width: min(600px, 40vw);
+    height: 40px;
+    background-color: #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.volume-fill {
+    width: 50%;
+    height: 100%;
+    background-color: #4CAF50;
+    transition: width 0.3s ease;
+}
+
+.volume-text {
+    font-size: min(2vw, 32px);
     font-family: 'Luckiest Guy', cursive;
+}
+
+/* Game Buttons Section */
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5vw;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    background: none;
+    transition: transform 0.3s ease;
+    padding: 0;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+img {
+    height: min(30vh, 200px);
+    width: auto;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+.img-hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
+}
+
+/* Results Section */
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2vh;
+}
+
+.results p {
+    font-size: min(3vw, 36px);
+    font-family: 'Luckiest Guy', cursive;
+    text-align: center;
+    line-height: 1.3;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Animation Classes */
+@keyframes win-flash {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(76, 175, 80, 0.3); }
+    100% { background-color: transparent; }
+}
+
+@keyframes lose-flash {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(255, 0, 0, 0.3); }
+    100% { background-color: transparent; }
+}
+
+.win-animation {
+    animation: win-flash 0.5s ease-in-out;
+}
+
+.lose-animation {
+    animation: lose-flash 0.5s ease-in-out;
+}
+
+.volume-bounce {
+    animation: volume-bounce 0.5s ease-in-out;
+}
+
+@keyframes volume-bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.highlight {
+    animation: highlight 0.5s ease-in-out;
+}
+
+@keyframes highlight {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.volume-bounce {
+    animation: volume-bounce 0.5s ease-in-out;
+}
+
+.results p {
+    transition: transform 0.3s ease;
+}
+
+.results p.highlight {
+    transform: scale(1.2);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
