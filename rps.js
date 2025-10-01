@@ -46,29 +46,21 @@ function showFeedback(playerSelection, computerChoice, score) {
 
     const result = document.createElement("p");
     if (score === 1) {
-        result.textContent += `You win this round! ${playerSelection} beats ${computerChoice}`;
-        document.body.classList.add('win-animation');
-        result.classList.add('highlight');
+        result.textContent = `You win this round! ${playerSelection} beats ${computerChoice}`;
+        result.classList.add('win-text');
     }
     else if (score === -1) {
-        result.textContent += `You lose this round! ${playerSelection} loses to ${computerChoice}`;
-        document.body.classList.add('lose-animation');
-        result.classList.add('highlight');
+        result.textContent = `You lose this round! ${playerSelection} loses to ${computerChoice}`;
+        result.classList.add('lose-text');
     }
     else {
-        result.textContent += `Draw! You both picked ${playerSelection}`;
+        result.textContent = `Draw! You both picked ${playerSelection}`;
     }
     div.appendChild(result);
 
     const matchInfoPara = document.createElement("p");
     matchInfoPara.textContent = `Score - You: ${matchInfo[0]} | AI: ${matchInfo[1]} | Total Rounds: ${matchInfo[2]}`;
     div.appendChild(matchInfoPara);
-
-    // Remove animation classes after they complete
-    setTimeout(() => {
-        document.body.classList.remove('win-animation', 'lose-animation');
-        result.classList.remove('highlight');
-    }, 500);
     
     return;
 }

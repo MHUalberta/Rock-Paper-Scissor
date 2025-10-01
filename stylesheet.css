@@ -99,24 +99,14 @@ img {
 }
 
 /* Animation Classes */
-@keyframes win-flash {
-    0% { background-color: transparent; }
-    50% { background-color: rgba(76, 175, 80, 0.3); }
-    100% { background-color: transparent; }
+.win-text.win-text {
+    color: #4CAF50;
+    transition: color 0.3s ease;
 }
 
-@keyframes lose-flash {
-    0% { background-color: transparent; }
-    50% { background-color: rgba(255, 0, 0, 0.3); }
-    100% { background-color: transparent; }
-}
-
-.win-animation {
-    animation: win-flash 0.5s ease-in-out;
-}
-
-.lose-animation {
-    animation: lose-flash 0.5s ease-in-out;
+.lose-text.lose-text {
+    color: #ff0000;
+    transition: color 0.3s ease;
 }
 
 .volume-bounce {
@@ -129,25 +119,7 @@ img {
     100% { transform: scale(1); }
 }
 
-.highlight {
-    animation: highlight 0.5s ease-in-out;
-}
-
-@keyframes highlight {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.volume-bounce {
-    animation: volume-bounce 0.5s ease-in-out;
-}
-
 .results p {
-    transition: transform 0.3s ease;
-}
-
-.results p.highlight {
-    transform: scale(1.2);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+    color: #333;
 }
